@@ -27,7 +27,7 @@ export const getShowProductCode = createSelector(
 	state => state.showProductCode
 )
 
-export const getCurrentProducts = createSelector(
+export const getCurrentProduct = createSelector(
 	getProductFeatureState,
 	state => state.currentProduct
 )
@@ -66,7 +66,7 @@ export const productReducer = createReducer<ProductState>(
 			currentProduct: {
 				id: 0,
 				productName: "",
-				productCode: "",
+				productCode: "New",
 				description: "",
 				starRating: 0
 			}
