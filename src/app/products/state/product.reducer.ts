@@ -2,6 +2,7 @@ import { createAction, createFeatureSelector, createReducer, createSelector, on 
 import * as AppState from "../../state/app.state"
 
 import { Product } from "../product"
+import * as ProductActions from "./product.actions";
 
 export interface State extends AppState.State {
 	products: ProductState;
@@ -28,20 +29,50 @@ export const getShowProductCode = createSelector(
 
 export const getCurrentProducts = createSelector(
 	getProductFeatureState,
-	state=>state.currentProduct
+	state => state.currentProduct
 )
 
 export const getProducts = createSelector(
 	getProductFeatureState,
-	state=>state.products
+	state => state.products
 )
 
 export const productReducer = createReducer<ProductState>(
 	initialState,
-	on(createAction('[Product] Toggle Product Code'), (state): ProductState => {
+	on(ProductActions.toggleProductCode, (state): ProductState => {
 		return {
 			...state,
 			showProductCode: !state.showProductCode
 		}
-	})
+	}),
+
+	on(ProductActions.setCurrentProduct, (state, action): ProductState => {
+		return {
+			...state,
+			currentProduct: action.product
+		}
+	}),
+
+	on(ProductActions.clearCurrentProduct, (state): ProductState => {
+		return {
+			...state,
+			currentProduct: null
+		}
+	}),
+
+	on(ProductActions.initializeCurrentProduct, (state): ProductState => {
+		return {
+			...state,
+			currentProduct: {
+				id: 0,
+				productName: "",
+				productCode: "",
+				description: "",
+				starRating: 0
+			}
+		}
+	}),
+
+
+
 )
