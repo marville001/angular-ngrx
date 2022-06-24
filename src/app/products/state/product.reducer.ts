@@ -121,11 +121,19 @@ export const productReducer = createReducer<ProductState>(
 		}
 	}),
 
+	on(ProductActions.createProductSuccess, (state, action): ProductState => {
+		return {
+			...state,
+			products: [...state.products, action.product],
+			error: '',
+		}
+	}),
 
-	on(ProductActions.updateProductFailure, (state, action): ProductState => {
+	on(ProductActions.updateProductFailure, ProductActions.createProductFailure, (state, action): ProductState => {
 		return {
 			...state,
 			error: action.error
 		}
 	}),
+
 )
